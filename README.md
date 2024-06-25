@@ -1,7 +1,18 @@
 Permission managment sdk js
 
+### To create build
+`[yarn | npm | pnpm] run build`
+### To test build
+in root dir of permission-sdk run `npm link`
+
+in any other project root run `npm link permission-sdk`
+and you good to go
+
+### Usage
+
 Import CameraPermission class:
 `import CameraPermission from 'permission-sdk';`
+
 Import modal styles:
 `import 'permission-sdk/lib/styles.css';`
 
