@@ -1,0 +1,28 @@
+{
+  "name": "permission-sdk",
+  "version": "1.0.0",
+  "description": "get permission to video streem on easy way",
+  "repository": "",
+  "keywords": [
+    "permission-sdk",
+    "video permission"
+  ],
+  "author": "Ulukbek Dzhunusov <dzhunusov.ulukbek@gmail.com> (https://github.com/mstrluke)",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/index.js",
+  "files": [
+    "lib/"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "tsc": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
+    "prepublishOnly": "npm run tsc",
+    "copy-assets": "cp -r src/assets lib/assets"
+  },
+  "dependencies": {
+    "@types/node": "^20.14.7",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.5.2",
+    "webpack": "^5.0.0"
+  }
+}
