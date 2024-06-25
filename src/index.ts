@@ -1,4 +1,4 @@
-import { permission_details } from './constants';
+import { Browser, PermissionDetail, PermissionDetails, Platform, permission_details } from './constants';
 import createModal from './modal';
 
 export interface PermissionResult {
@@ -8,8 +8,8 @@ export interface PermissionResult {
   steps?: string;
   screenshotUrl?: string;
   deep_link?: string;
-  openSettings?: () => void;
-  copyDeepLink?: () => void;
+  openDeepLink?: () => void;
+  showSteps?: () => void;
 }
 
 const detectBrowserAndOS = () => {
@@ -41,10 +41,18 @@ const detectBrowserAndOS = () => {
             ? 'linux'
             : 'unknown';
 
-  return { browser, os };
+  return { browser: Browser[browser], os: Platform[os] };
 };
 
 class CameraPermission {
+  private data: PermissionDetails | undefined = undefined;
+
+  constructor(data?: PermissionDetails) {
+    if (data) {
+      this.data = data;
+    }
+  }
+
   async getCameraPermission(): Promise<PermissionResult> {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -63,11 +71,10 @@ class CameraPermission {
       message: 'Browser or OS not supported.',
       steps: 'Please refer to your browser and operating system documentation to enable camera permissions.',
       screenshotUrl: 'https://example.com/screenshots/default.png',
-      openSettings: () => { },
+      openDeepLink: () => { },
     };
 
-    const { steps, screenshotUrl, deep_link } = permission_details[browser][os]
-
+    const { steps, screenshotUrl, deep_link } = (this.data || permission_details)[browser][os] as PermissionDetail;
 
     return {
       success: false,
@@ -75,8 +82,8 @@ class CameraPermission {
       steps,
       deep_link,
       screenshotUrl,
-      openSettings: () => window.open(deep_link, '_blank'),
-      copyDeepLink: async () => {
+      openDeepLink: () => window.open(deep_link, '_blank'),
+      showSteps: async () => {
         if (os === 'ios' || os === 'android') {
           createModal({ steps, screenshotUrl })
           return;

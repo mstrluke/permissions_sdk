@@ -31,7 +31,7 @@ const createModal = ({ steps, screenshotUrl }: CreateModalProps) => {
   modal.style.padding = '20px';
   modal.style.zIndex = '1000';
   modal.style.borderRadius = '6px';
-  modal.style.minWidth = '420px';
+  modal.style.minWidth = '380px';
   modal.style.display = 'flex';
   modal.style.flexWrap = 'wrap';
 
@@ -67,7 +67,7 @@ const createModal = ({ steps, screenshotUrl }: CreateModalProps) => {
   title.style.color = 'white';
   title.style.width = '100%';
   //@ts-ignore-next-line
-  img.src = 'https://techwiser.com/wp-content/uploads/2021/11/Settings-on-iPhone.jpg';
+  img.src = screenshotUrl;
   img.style.maxHeight = '320px';
   img.style.objectFit = 'contain';
   img.style.flex = '1';
