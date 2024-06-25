@@ -1,9 +1,9 @@
 export type CreateModalProps = {
   steps: string;
-  screenshotUrl: string;
+  screenshot_url: string;
 };
 
-const createModal = ({ steps, screenshotUrl }: CreateModalProps) => {
+const createModal = ({ steps, screenshot_url }: CreateModalProps) => {
   const body = document.getElementsByTagName('body')[0];
   const overlay = document.createElement('div');
   const modal = document.createElement('div');
@@ -67,7 +67,7 @@ const createModal = ({ steps, screenshotUrl }: CreateModalProps) => {
   title.style.color = 'white';
   title.style.width = '100%';
   //@ts-ignore-next-line
-  img.src = screenshotUrl;
+  img.src = screenshot_url;
   img.style.maxHeight = '320px';
   img.style.objectFit = 'contain';
   img.style.flex = '1';

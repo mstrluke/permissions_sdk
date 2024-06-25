@@ -6,7 +6,7 @@ export interface PermissionResult {
   stream?: MediaStream;
   message?: string;
   steps?: string;
-  screenshotUrl?: string;
+  screenshot_url?: string;
   deep_link?: string;
   openDeepLink?: () => void;
   showSteps?: () => void;
@@ -65,31 +65,24 @@ class CameraPermission {
 
   private handlePermissionDenied(): PermissionResult {
     const { browser, os } = detectBrowserAndOS();
+    const notSupported = browser === 'unknown' || os === 'unknown';
 
-    if (browser === 'unknown' || os === 'unknown') return {
-      success: false,
-      message: 'Browser or OS not supported.',
-      steps: 'Please refer to your browser and operating system documentation to enable camera permissions.',
-      screenshotUrl: 'https://example.com/screenshots/default.png',
-      openDeepLink: () => { },
-    };
-
-    const { steps, screenshotUrl, deep_link } = (this.data || permission_details)[browser][os] as PermissionDetail;
+    const { steps, screenshot_url, deep_link } = (this.data || permission_details)[browser][os] as PermissionDetail;
 
     return {
       success: false,
-      message: 'Camera permission denied.',
+      message: notSupported ? 'Browser or OS not supported.' :'Camera permission denied.',
       steps,
       deep_link,
-      screenshotUrl,
+      screenshot_url,
       openDeepLink: () => window.open(deep_link, '_blank'),
       showSteps: async () => {
         if (os === 'ios' || os === 'android') {
-          createModal({ steps, screenshotUrl })
+          createModal({ steps, screenshot_url })
           return;
         }
 
-        createModal({ steps: 'To enable video stream features please follow settings link: ' + deep_link, screenshotUrl })
+        createModal({ steps: 'To enable video stream features please follow settings link: ' + deep_link, screenshot_url })
       },
     };
   }
