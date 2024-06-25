@@ -65,6 +65,7 @@ const createModal = ({ steps, screenshotUrl }: CreateModalProps) => {
   title.innerHTML = steps;
   title.style.marginBottom = '20px';
   title.style.color = 'white';
+  title.style.width = '100%';
   //@ts-ignore-next-line
   img.src = 'https://techwiser.com/wp-content/uploads/2021/11/Settings-on-iPhone.jpg';
   img.style.maxHeight = '320px';
