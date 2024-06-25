@@ -1,10 +1,10 @@
-import { Browser, PermissionDetail, PermissionDetails, Platform, permission_details } from './constants';
+import { Browser, PermissionDetail, PermissionDetails, Platform, error_messages, permission_details } from './constants';
 import createModal from './modal';
 
 export interface PermissionResult {
   success: boolean;
   stream?: MediaStream;
-  message?: string;
+  error?: { name: string, message: string };
   steps?: string;
   screenshot_url?: string;
   deep_link?: string;
@@ -58,31 +58,38 @@ class CameraPermission {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
 
       return { success: true, stream };
-    } catch (error) {
-      return this.handlePermissionDenied();
+    } catch (error: unknown) {
+      return this.handlePermissionDenied(error instanceof DOMException ? error.name : 'Default');
     }
   }
 
-  private handlePermissionDenied(): PermissionResult {
+  private handlePermissionDenied(error_name: string): PermissionResult {
     const { browser, os } = detectBrowserAndOS();
-    const notSupported = browser === 'unknown' || os === 'unknown';
-
     const { steps, screenshot_url, deep_link } = (this.data || permission_details)[browser][os] as PermissionDetail;
-
     return {
       success: false,
-      message: notSupported ? 'Browser or OS not supported.' :'Camera permission denied.',
+      error: {
+        name: error_name,
+        message: error_messages[error_name]
+      },
       steps,
       deep_link,
       screenshot_url,
       openDeepLink: () => window.open(deep_link, '_blank'),
       showSteps: async () => {
         if (os === 'ios' || os === 'android') {
-          createModal({ steps, screenshot_url })
-          return;
+          createModal({
+            steps,
+            screenshot_url,
+            error_message: error_messages[error_name]
+          })
         }
 
-        createModal({ steps: 'To enable video stream features please follow settings link: ' + deep_link, screenshot_url })
+        createModal({
+          steps: 'To enable video stream features please follow settings link: ' + deep_link,
+          screenshot_url,
+          error_message: error_messages[error_name],
+        })
       },
     };
   }

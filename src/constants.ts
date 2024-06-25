@@ -1,4 +1,3 @@
-// Enum for browsers
 export enum Browser {
   chrome = 'chrome',
   firefox = 'firefox',
@@ -9,7 +8,6 @@ export enum Browser {
   unknown = 'unknown',
 }
 
-// Enum for platforms
 export enum Platform {
   android = 'android',
   windows = 'windows',
@@ -25,12 +23,10 @@ export type PermissionDetail = {
   screenshot_url: string;
 }
 
-// Define permission details type
 export type PermissionDetails = {
   [browser in Browser]: { [platform in Platform]?: PermissionDetail };
 };
 
-// Example usage:
 export const permission_details: PermissionDetails = {
   [Browser.chrome]: {
     [Platform.android]: {
@@ -201,4 +197,16 @@ export const permission_details: PermissionDetails = {
       screenshot_url: './assets/unknown.png',
     },
   },
+};
+
+export const error_messages: { [key: string]: string } = {
+  NotAllowedError: 'Camera access was denied.\n Please allow camera access in your browser settings.',
+  NotFoundError: 'No camera found\n. Please connect a camera and try again.',
+  NotReadableError: 'The camera is currently in use or there was a hardware error.',
+  OverconstrainedError: 'The camera constraints cannot be satisfied by any available device.',
+  SecurityError: 'Media access is blocked due to security settings.',
+  AbortError: 'The operation was aborted. Please try again.',
+  TypeError: 'The constraints parameter was missing or had an incorrect value.',
+  SystemError: 'The system error occurred while trying to access the camera.', // all system errors
+  Default: 'An unknown error occurred while trying to access the camera.'
 };

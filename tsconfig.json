@@ -10,6 +10,7 @@
     "outDir": "./lib"
   },
   "include": [
-    "./src"
+    "./src/**/*.ts",
+    "./src/**/*.css"
   ]
 }
