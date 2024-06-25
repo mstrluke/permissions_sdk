@@ -1,10 +1,10 @@
 export type CreateModalProps = {
   steps: string;
   screenshot_url: string;
-  error_message: string;
+  message: string;
 };
 
-const createModal = ({ steps, screenshot_url, error_message }: CreateModalProps) => {
+const createModal = ({ steps, screenshot_url, message }: CreateModalProps) => {
   const body = document.body;
   const overlay = document.createElement('div');
   const modal = document.createElement('div');
@@ -27,7 +27,7 @@ const createModal = ({ steps, screenshot_url, error_message }: CreateModalProps)
 
   okButton.innerText = 'OK';
   cancelButton.innerText = 'Cancel';
-  title.innerHTML = error_message;
+  title.innerHTML = message;
   subTitle.innerHTML = steps;
   img.src = screenshot_url;
 

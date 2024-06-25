@@ -199,7 +199,9 @@ export const permission_details: PermissionDetails = {
   },
 };
 
-export const error_messages: { [key: string]: string } = {
+export type ErrorMessagesProps = { [key: string]: string };
+
+export const error_messages: ErrorMessagesProps = {
   NotAllowedError: 'Camera access was denied.\n Please allow camera access in your browser settings.',
   NotFoundError: 'No camera found\n. Please connect a camera and try again.',
   NotReadableError: 'The camera is currently in use or there was a hardware error.',

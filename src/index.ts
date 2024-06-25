@@ -1,4 +1,4 @@
-import { Browser, PermissionDetail, PermissionDetails, Platform, error_messages, permission_details } from './constants';
+import { Browser, ErrorMessagesProps, PermissionDetail, PermissionDetails, Platform, error_messages, permission_details } from './constants';
 import createModal from './modal';
 
 export interface PermissionResult {
@@ -45,12 +45,12 @@ const detectBrowserAndOS = () => {
 };
 
 class CameraPermission {
-  private data: PermissionDetails | undefined = undefined;
+  private permissions_data: PermissionDetails | undefined = undefined;
+  private errors_data: ErrorMessagesProps | undefined = undefined;
 
-  constructor(data?: PermissionDetails) {
-    if (data) {
-      this.data = data;
-    }
+  constructor(permissions_data?: PermissionDetails, errors_data?: ErrorMessagesProps) {
+    this.permissions_data = permissions_data;
+    this.errors_data = errors_data;
   }
 
   async getCameraPermission(): Promise<PermissionResult> {
@@ -65,13 +65,12 @@ class CameraPermission {
 
   private handlePermissionDenied(error_name: string): PermissionResult {
     const { browser, os } = detectBrowserAndOS();
-    const { steps, screenshot_url, deep_link } = (this.data || permission_details)[browser][os] as PermissionDetail;
+    const { steps, screenshot_url, deep_link } = (this.permissions_data || permission_details)[browser][os] as PermissionDetail;
+    const message = (this.errors_data || error_messages)[error_name];
+
     return {
       success: false,
-      error: {
-        name: error_name,
-        message: error_messages[error_name]
-      },
+      error: { name: error_name, message },
       steps,
       deep_link,
       screenshot_url,
@@ -81,14 +80,14 @@ class CameraPermission {
           createModal({
             steps,
             screenshot_url,
-            error_message: error_messages[error_name]
+            message,
           })
         }
 
         createModal({
           steps: 'To enable video stream features please follow settings link: ' + deep_link,
           screenshot_url,
-          error_message: error_messages[error_name],
+          message,
         })
       },
     };

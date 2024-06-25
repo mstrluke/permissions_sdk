@@ -46,7 +46,7 @@ useEffect(async () => {
 ...
 
 ```
-### You can use your own messages, steps, screenshot_urls
+### You can use your own deep_link, steps, screenshot_urls and messages
 
 ```
 import { useEffect } = 'react';
@@ -61,7 +61,16 @@ const { getCameraPermission } = new CameraPermission({
       screenshot_url: './assets/chrome_android.png',
     }
   }
-  ...
+}, {
+  NotAllowedError: 'Camera access was denied.\n Please allow camera access in your browser settings.',
+  NotFoundError: 'No camera found\n. Please connect a camera and try again.',
+  NotReadableError: 'The camera is currently in use or there was a hardware error.',
+  OverconstrainedError: 'The camera constraints cannot be satisfied by any available device.',
+  SecurityError: 'Media access is blocked due to security settings.',
+  AbortError: 'The operation was aborted. Please try again.',
+  TypeError: 'The constraints parameter was missing or had an incorrect value.',
+  SystemError: 'The system error occurred while trying to access the camera.',
+  Default: 'An unknown error occurred while trying to access the camera.'
 });
 
 useEffect(async () => {
