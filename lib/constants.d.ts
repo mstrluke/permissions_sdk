@@ -26,6 +26,7 @@ export type PermissionDetails = {
     };
 };
 export declare const permission_details: PermissionDetails;
-export declare const error_messages: {
+export type ErrorMessagesProps = {
     [key: string]: string;
 };
+export declare const error_messages: ErrorMessagesProps;

@@ -74,7 +74,10 @@ class CameraPermission {
       steps,
       deep_link,
       screenshot_url,
-      openDeepLink: () => window.open(deep_link, '_blank'),
+      openDeepLink: () => {
+        const res = window.open(deep_link, '_blank');
+        if (!res) throw new Error('Not allowed to load local resource');
+      },
       showSteps: async () => {
         if (os === 'ios' || os === 'android') {
           createModal({
