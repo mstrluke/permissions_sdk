@@ -17,7 +17,6 @@
   "scripts": {
     "tsc": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
     "prepublishOnly": "npm run tsc",
-    "copy-assets": "cp -r src/assets lib/assets"
   },
   "dependencies": {
     "@types/node": "^20.14.7",
