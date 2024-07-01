@@ -1,19 +1,19 @@
 export type CreateModalProps = {
   steps: string;
-  screenshot_url: string;
+  screenshot_urls: string[];
   message: string;
 };
 
-const createModal = ({ steps, screenshot_url, message }: CreateModalProps) => {
+const createModal = ({ steps, screenshot_urls, message }: CreateModalProps) => {
   const body = document.body;
   const overlay = document.createElement('div');
   const modal = document.createElement('div');
   const title = document.createElement('p');
   const subTitle = document.createElement('p');
-  const img = document.createElement('img');
   const buttonContainer = document.createElement('div');
   const okButton = document.createElement('button');
   const cancelButton = document.createElement('button');
+  const imgs: Node[] = [];
 
   // Add class names
   overlay.className = 'permissions_modal__overlay';
@@ -23,13 +23,24 @@ const createModal = ({ steps, screenshot_url, message }: CreateModalProps) => {
   cancelButton.className = 'permissions_modal__button permissions_modal__button-cancel';
   title.className = 'permissions_modal__title';
   subTitle.className = 'permissions_modal__sub-title';
-  img.className = 'permissions_modal__image';
 
   okButton.innerText = 'OK';
   cancelButton.innerText = 'Cancel';
   title.innerHTML = message;
   subTitle.innerHTML = steps;
-  img.src = screenshot_url;
+
+  screenshot_urls.forEach((screenshot_url) => {
+    const a = document.createElement('a');
+    const img = document.createElement('img');
+    a.className = 'permissions_modal__image-link'
+    a.style.maxWidth = 100 / screenshot_urls.length - 10 + '%'
+    a.href = screenshot_url;
+    a.target = '_blank';
+    img.className = 'permissions_modal__image';
+    img.src = screenshot_url;
+    a.appendChild(img);
+    imgs.push(a);
+  })
 
   const closeModal = () => {
     overlay.remove();
@@ -47,7 +58,7 @@ const createModal = ({ steps, screenshot_url, message }: CreateModalProps) => {
   okButton.addEventListener('click', closeModal);
   cancelButton.addEventListener('click', closeModal);
 
-  modal.append(title, subTitle, img, buttonContainer);
+  modal.append(title, subTitle, ...imgs, buttonContainer);
   buttonContainer.append(okButton, cancelButton);
   overlay.appendChild(modal);
   body.appendChild(overlay);

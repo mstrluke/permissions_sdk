@@ -23,6 +23,8 @@
   flex-wrap: wrap;
   text-align: center;
   font-size: 1rem;
+  gap: 20px;
+  justify-content: center;
 }
 
 .permissions_modal__buttons {
@@ -66,8 +68,8 @@
   margin-top: 0;
 }
 
-.permissions_modal__button-image {
+.permissions_modal__image {
   max-height: 320px;
   object-fit: contain;
-  flex: 1;
+  width: 100%;
 }

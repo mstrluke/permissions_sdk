@@ -5,7 +5,10 @@ export declare enum Browser {
     edge = "edge",
     samsung = "samsung",
     opera = "opera",
-    unknown = "unknown"
+    brave = "brave",
+    vivaldi = "vivaldi",
+    unknown = "unknown",
+    system = "system"
 }
 export declare enum Platform {
     android = "android",
@@ -18,14 +21,15 @@ export declare enum Platform {
 export type PermissionDetail = {
     deep_link: string;
     steps: string;
-    screenshot_url: string;
+    screenshot_urls: string[];
 };
 export type PermissionDetails = {
-    [browser in Browser]: {
-        [platform in Platform]?: PermissionDetail;
+    [key: string]: {
+        [key: string]: PermissionDetail;
     };
 };
 export declare const permission_details: PermissionDetails;
-export declare const error_messages: {
+export type ErrorMessagesProps = {
     [key: string]: string;
 };
+export declare const error_messages: ErrorMessagesProps;
