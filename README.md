@@ -156,4 +156,6 @@ Title classname: `permissions_modal__title`;
 
 Sub-Title classname: `permissions_modal__sub-title`;
 
+Img href wrapper: `permissions_modal__image-link`
+
 Img classname: `permissions_modal__image`;

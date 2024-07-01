@@ -68,8 +68,14 @@
   margin-top: 0;
 }
 
+.permissions_modal__image-link {
+  border: 1px solid white;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
 .permissions_modal__image {
-  max-height: 320px;
-  object-fit: contain;
+  object-fit: cover;
+  height: 100%;
   width: 100%;
 }
